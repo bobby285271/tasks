@@ -438,10 +438,10 @@ public class Tasks.TaskModel : Object {
         return backend_name == null ? "" : backend_name;
     }
 
-    private async Soup.URI discover_webdav_server_uri (E.NamedParameters credentials, E.Source collection_source) throws Error {
+    private async GLib.Uri discover_webdav_server_uri (E.NamedParameters credentials, E.Source collection_source) throws Error {
         var collection_source_extension = (E.SourceCollection) collection_source.get_extension (E.SOURCE_EXTENSION_COLLECTION);
 
-        Soup.URI? webdav_server_uri = null;
+        GLib.Uri? webdav_server_uri = null;
         GLib.Error? webdav_error = null;
 
 #if HAS_EDS_3_40
@@ -477,7 +477,7 @@ public class Tasks.TaskModel : Object {
 
                     if (webdav_discovered_sources.length () > 0) {
                         var webdav_discovered_source = webdav_discovered_sources.nth_data (0);
-                        webdav_server_uri = new Soup.URI (webdav_discovered_source.href.dup ());
+                        webdav_server_uri = GLib.Uri.parse (webdav_discovered_source.href.dup (), GLib.UriFlags.NONE);
                     }
 
 #if !HAS_EDS_3_40
