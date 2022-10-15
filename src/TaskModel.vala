@@ -274,7 +274,9 @@ public class Tasks.TaskModel : Object {
                 collection_source_webdav_session.credentials = credentials;
 
                 var webdav_task_list_uri = yield discover_webdav_server_uri (credentials, collection_source);
-                webdav_task_list_uri.set_path (webdav_task_list_uri.get_path () + "/" + GLib.Uuid.string_random ().up ());
+                webdav_task_list_uri = Soup.uri_copy (webdav_task_list_uri,
+                    Soup.URIComponent.PATH, webdav_task_list_uri.get_path () + "/" + GLib.Uuid.string_random ().up (),
+                    Soup.URIComponent.NONE);
 
                 collection_source_webdav_session.mkcalendar_sync (
                     webdav_task_list_uri.to_string (false),
@@ -493,7 +495,9 @@ public class Tasks.TaskModel : Object {
                         uri_dir_path = uri_dir_path.substring (0, uri_dir_path.length - 1);
                     }
                     uri_dir_path = uri_dir_path.substring (0, uri_dir_path.last_index_of ("/"));
-                    webdav_server_uri.set_path (uri_dir_path);
+                    webdav_server_uri = Soup.uri_copy (webdav_server_uri,
+                        Soup.URIComponent.PATH, uri_dir_path,
+                        Soup.URIComponent.NONE);
 
                 } catch (Error e) {
                     webdav_error = e;
