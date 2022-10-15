@@ -394,7 +394,7 @@ public class Tasks.TaskModel : Object {
 
             switch (backend_name.down ()) {
                 case "webdav": return true;
-                case "google": return !is_gtasks_default_task_list (source, registry);
+                //  case "google": return !is_gtasks_default_task_list (source, registry);
                 case "local": return source.removable;
             }
 
