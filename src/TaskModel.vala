@@ -332,7 +332,7 @@ public class Tasks.TaskModel : Object {
                 var task_list_webdav_extension = (E.SourceWebdav) task_list.get_extension (E.SOURCE_EXTENSION_WEBDAV_BACKEND);
 
                 collection_source_webdav_session.delete_sync (
-                    task_list_webdav_extension.soup_uri.to_string (),
+                    task_list_webdav_extension.uri.to_string (),
                     E.WEBDAV_DEPTH_THIS_AND_CHILDREN,
                     null,
                     null
@@ -542,7 +542,7 @@ public class Tasks.TaskModel : Object {
             E.webdav_session_update_properties_sync (
                 collection_source_webdav_session,
 #endif
-                source_webdav_extension.soup_uri.to_string (),
+                source_webdav_extension.uri.to_string (),
                 changes,
                 null
             );
@@ -631,7 +631,7 @@ public class Tasks.TaskModel : Object {
                     E.webdav_session_update_properties_sync (
                         collection_source_webdav_session,
 #endif
-                        source_webdav_extension.soup_uri.to_string (),
+                        source_webdav_extension.uri.to_string (),
                         changes,
                         null
                     );
