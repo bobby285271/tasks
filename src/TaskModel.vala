@@ -288,18 +288,18 @@ public class Tasks.TaskModel : Object {
                 registry.refresh_backend_sync (collection_source.uid, null);
                 break;
 
-            case "google":
-                var collection_source = registry.find_extension (collection_or_sibling, E.SOURCE_EXTENSION_COLLECTION);
-                var authorizer = (GData.Authorizer) new E.GDataOAuth2Authorizer (collection_source, typeof (GData.TasksService));
-                var gtasks_service = new GData.TasksService (authorizer);
+            //  case "google":
+            //      var collection_source = registry.find_extension (collection_or_sibling, E.SOURCE_EXTENSION_COLLECTION);
+            //      var authorizer = (GData.Authorizer) new E.GDataOAuth2Authorizer (collection_source, typeof (GData.TasksService));
+            //      var gtasks_service = new GData.TasksService (authorizer);
 
-                var gtasks_tasklist = new GData.TasksTasklist (null) {
-                    title = task_list.display_name
-                };
+            //      var gtasks_tasklist = new GData.TasksTasklist (null) {
+            //          title = task_list.display_name
+            //      };
 
-                gtasks_service.insert_tasklist (gtasks_tasklist, null);
-                yield registry.refresh_backend (collection_source.uid, null);
-                break;
+            //      gtasks_service.insert_tasklist (gtasks_tasklist, null);
+            //      yield registry.refresh_backend (collection_source.uid, null);
+            //      break;
 
             case "local":
                 task_list.parent = "local-stub";
@@ -338,26 +338,26 @@ public class Tasks.TaskModel : Object {
 
                 registry.refresh_backend_sync (collection_source.uid, null);
                 break;
-            case "google":
-                var collection_source = registry.find_extension (task_list, E.SOURCE_EXTENSION_COLLECTION);
-                var authorizer = (GData.Authorizer) new E.GDataOAuth2Authorizer (collection_source, typeof (GData.TasksService));
-                var service = new GData.TasksService (authorizer);
-                var uri = "https://www.googleapis.com/tasks/v1/users/@me/lists/%s";
-                var id = ((E.SourceResource) task_list.get_extension (
-                    E.SOURCE_EXTENSION_RESOURCE
-                )).identity.replace ("gtasks::", "");
+            //  case "google":
+            //      var collection_source = registry.find_extension (task_list, E.SOURCE_EXTENSION_COLLECTION);
+            //      var authorizer = (GData.Authorizer) new E.GDataOAuth2Authorizer (collection_source, typeof (GData.TasksService));
+            //      var service = new GData.TasksService (authorizer);
+            //      var uri = "https://www.googleapis.com/tasks/v1/users/@me/lists/%s";
+            //      var id = ((E.SourceResource) task_list.get_extension (
+            //          E.SOURCE_EXTENSION_RESOURCE
+            //      )).identity.replace ("gtasks::", "");
 
-                var tasklist = (GData.TasksTasklist) yield service.query_single_entry_async (
-                    GData.TasksService.get_primary_authorization_domain (),
-                    uri.printf (id),
-                    null,
-                    typeof (GData.TasksTasklist),
-                    null
-                );
+            //      var tasklist = (GData.TasksTasklist) yield service.query_single_entry_async (
+            //          GData.TasksService.get_primary_authorization_domain (),
+            //          uri.printf (id),
+            //          null,
+            //          typeof (GData.TasksTasklist),
+            //          null
+            //      );
 
-                service.delete_tasklist (tasklist, null);
-                yield registry.refresh_backend (collection_source.uid, null);
-                break;
+            //      service.delete_tasklist (tasklist, null);
+            //      yield registry.refresh_backend (collection_source.uid, null);
+            //      break;
 
             case "local":
                 task_list.remove_sync (null);
@@ -402,24 +402,24 @@ public class Tasks.TaskModel : Object {
         return false;
     }
 
-    private bool is_gtasks_default_task_list (E.Source task_list, E.SourceRegistry registry) throws Error {
-        var collection_source = registry.find_extension (task_list, E.SOURCE_EXTENSION_COLLECTION);
-        var authorizer = (GData.Authorizer) new E.GDataOAuth2Authorizer (collection_source, typeof (GData.TasksService));
-        var service = new GData.TasksService (authorizer);
-        var id = ((E.SourceResource) task_list.get_extension (
-            E.SOURCE_EXTENSION_RESOURCE
-        )).identity.replace ("gtasks::", "");
+    //  private bool is_gtasks_default_task_list (E.Source task_list, E.SourceRegistry registry) throws Error {
+    //      var collection_source = registry.find_extension (task_list, E.SOURCE_EXTENSION_COLLECTION);
+    //      var authorizer = (GData.Authorizer) new E.GDataOAuth2Authorizer (collection_source, typeof (GData.TasksService));
+    //      var service = new GData.TasksService (authorizer);
+    //      var id = ((E.SourceResource) task_list.get_extension (
+    //          E.SOURCE_EXTENSION_RESOURCE
+    //      )).identity.replace ("gtasks::", "");
 
-        var tasklist = (GData.TasksTasklist) service.query_single_entry (
-            GData.TasksService.get_primary_authorization_domain (),
-            "https://www.googleapis.com/tasks/v1/users/@me/lists/@default",
-            null,
-            typeof (GData.TasksTasklist),
-            null
-        );
+    //      var tasklist = (GData.TasksTasklist) service.query_single_entry (
+    //          GData.TasksService.get_primary_authorization_domain (),
+    //          "https://www.googleapis.com/tasks/v1/users/@me/lists/@default",
+    //          null,
+    //          typeof (GData.TasksTasklist),
+    //          null
+    //      );
 
-        return tasklist.id == id;
-    }
+    //      return tasklist.id == id;
+    //  }
 
     public string get_collection_backend_name (E.Source source, E.SourceRegistry registry) {
         string? backend_name = null;
@@ -545,28 +545,28 @@ public class Tasks.TaskModel : Object {
 
             registry.refresh_backend_sync (collection_source.uid, null);
 
-        } else if ("gtasks" == ((E.SourceTaskList) task_list.get_extension (E.SOURCE_EXTENSION_TASK_LIST)).backend_name && E.GDataOAuth2Authorizer.supported ()) {
-            debug ("GTasks Rename '%s'", task_list.get_uid ());
+        //  } else if ("gtasks" == ((E.SourceTaskList) task_list.get_extension (E.SOURCE_EXTENSION_TASK_LIST)).backend_name && E.GDataOAuth2Authorizer.supported ()) {
+        //      debug ("GTasks Rename '%s'", task_list.get_uid ());
 
-            var authorizer = (GData.Authorizer) new E.GDataOAuth2Authorizer (collection_source, typeof (GData.TasksService));
-            var gtasks_service = new GData.TasksService (authorizer);
-            var uri = "https://www.googleapis.com/tasks/v1/users/@me/lists/%s";
-            var task_list_id = ((E.SourceResource) task_list.get_extension (
-                E.SOURCE_EXTENSION_RESOURCE
-            )).identity.replace ("gtasks::", "");
+        //      var authorizer = (GData.Authorizer) new E.GDataOAuth2Authorizer (collection_source, typeof (GData.TasksService));
+        //      var gtasks_service = new GData.TasksService (authorizer);
+        //      var uri = "https://www.googleapis.com/tasks/v1/users/@me/lists/%s";
+        //      var task_list_id = ((E.SourceResource) task_list.get_extension (
+        //          E.SOURCE_EXTENSION_RESOURCE
+        //      )).identity.replace ("gtasks::", "");
 
-            var gtasks_tasklist = (GData.TasksTasklist) yield gtasks_service.query_single_entry_async (
-                GData.TasksService.get_primary_authorization_domain (),
-                uri.printf (task_list_id),
-                null,
-                typeof (GData.TasksTasklist),
-                null
-            );
+        //      var gtasks_tasklist = (GData.TasksTasklist) yield gtasks_service.query_single_entry_async (
+        //          GData.TasksService.get_primary_authorization_domain (),
+        //          uri.printf (task_list_id),
+        //          null,
+        //          typeof (GData.TasksTasklist),
+        //          null
+        //      );
 
-            gtasks_tasklist.title = display_name;
-            gtasks_service.update_tasklist (gtasks_tasklist, null);
+        //      gtasks_tasklist.title = display_name;
+        //      gtasks_service.update_tasklist (gtasks_tasklist, null);
 
-            yield registry.refresh_backend (collection_source.uid, null);
+        //      yield registry.refresh_backend (collection_source.uid, null);
 
         } else if (task_list.parent == "local-stub") {
             debug ("Local Rename '%s'", task_list.get_uid ());
